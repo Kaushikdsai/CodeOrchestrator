@@ -6,7 +6,6 @@ import OutputPanel from "../components/OutputPanel";
 import { socket } from "../services/socket";
 
 function Room(){
-    
     const { roomId }=useParams();
 
     const [code,setCode]=useState("");
@@ -20,20 +19,29 @@ function Room(){
         return () => socket.off("code-update");
     }, [roomId]);
 
-    useEffect(() => {
-        socket.emit("code-change", { roomId,code });
-    },[roomId,code]);
+    const handleCodeChange = (code) => {
+        setCode(code);
+        socket.emit("code-change", {
+            roomId,
+            code: code
+        })
+    }
 
     const runCode = async () => {
-        const res=await axios.post("http://localhost:5000/api/run", {code});
-        const data=res.data;
-        setOutput(data.output || data.compileError || data.runtimeError);
+        try{
+            const res=await axios.post("http://localhost:5000/api/run", {code});
+            const data=res.data;
+            setOutput(data.output || data.compileError || data.runtimeError);
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     return (
         <div>
             <h2>ROOM: {roomId}</h2>
-            <CodeEditor code={code} setCode={setCode}/>
+            <CodeEditor code={code} setCode={handleCodeChange} />
             <button onClick={runCode}>Run Code</button>
             <OutputPanel output={output} />
         </div>

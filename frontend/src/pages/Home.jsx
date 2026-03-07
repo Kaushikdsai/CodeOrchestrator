@@ -7,7 +7,7 @@ function Home(){
     const navigate=useNavigate();
 
     const createNewRoom = () => {
-        const id=Math.random().toString(36).substring(2,8);
+        const id=Date.now().toString(36) + Math.random().toString(36).substring(2,5);
         navigate(`/room/${id}`);
     }
 
@@ -24,7 +24,7 @@ function Home(){
             <h2>Collaborate. Compile. Execute.</h2>
             <div>
                 <button onClick={createNewRoom}>New Room</button>
-                <input placeholder="Enter Room ID" value={roomId} onChange={(e) => setRoomId(e.target.value)}/>
+                <input placeholder="Enter Room ID" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
                 <button onClick={joinRoom}>Join</button>
             </div>
         </div>
