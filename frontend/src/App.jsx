@@ -3,15 +3,16 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Room from "./pages/Room";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App(){
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={<Home />} />
+                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/room/:roomId" element={<Room />} />
+                <Route path="/room/:roomId" element={<ProtectedRoute><Room /></ProtectedRoute>} />
             </Routes>
         </BrowserRouter>
     );

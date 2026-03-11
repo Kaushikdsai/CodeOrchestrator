@@ -1,0 +1,20 @@
+body{
+    margin: 0;
+    background-color: #16222A;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #0B1C26;
+    color: white;
+    a{
+        margin-top: 10px;
+        margin-right: 4px;
+        text-decoration: none;
+        color: white;
+    }
+    a:hover{
+        color: #3f9ac5;
+    }
+}

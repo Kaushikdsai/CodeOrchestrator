@@ -1,13 +1,16 @@
-
+import "../styles/Navbar.css";
 
 function Navbar(){
+    const token=sessionStorage.getItem("token");
     return (
-        <div>
-            <img src="" alt="logo" />
-            <p>Code Orchestrator</p>
-            <link></link>
-        </div>
-    )
+        <nav>
+            <p>CodeCollab</p>
+            {token && (
+                <a href="/login" onClick={() => sessionStorage.removeItem("token")}>Logout</a>
+            )}
+            {!token && <a href="/login">Login</a>}
+        </nav>
+    );
 }
 
 export default Navbar;

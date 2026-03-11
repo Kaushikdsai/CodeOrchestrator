@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import "../styles/login.css"
 
 function Login(){
     const [email,setEmail]=useState("");
@@ -15,7 +17,7 @@ function Login(){
                 email,password
             });
             const data=res.data;
-            localStorage.setItem("token",data.token);
+            sessionStorage.setItem("token",data.token);
             navigate("/home");
         }
         catch(err){
@@ -24,13 +26,16 @@ function Login(){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>LOGIN</h1>
-            <input placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit">Submit</button>
-            <a href="/register">Create Account</a>
-        </form>
+        <>
+            <Navbar />
+            <form onSubmit={handleSubmit}>
+                <h1 className="login-title">LOGIN</h1>
+                <input className="login-ip" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input className="login-ip" placeholder="Enter password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <button className="login-btn" type="submit">Submit</button>
+                <a href="/register">Create Account</a>
+            </form>
+        </>
     )
 }
 

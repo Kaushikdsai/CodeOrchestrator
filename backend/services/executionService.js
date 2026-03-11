@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuid } = require("uuid");
 
-const executeJava = async (code) => {
+const executeCode = async (code) => {
   const jobId = uuid();
   const jobPath = path.join(__dirname, "..", "temp", jobId);
 
@@ -36,4 +36,4 @@ const executeJava = async (code) => {
   });
 };
 
-module.exports = { executeJava };
+module.exports = { executeCode };

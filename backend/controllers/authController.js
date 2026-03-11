@@ -13,10 +13,12 @@ exports.register=async (req,res) => {
     const hashedPassword=await bcrypt.hash(password,10);
     
     const user=await User.create({
-        name,email,passwordHash
+        name,
+        email,
+        passwordHash: hashedPassword
     });
 
-    res.json({ message:"User created" });
+    return res.json({ message:"User created" });
 };
 
 
@@ -25,12 +27,12 @@ exports.login=async (req,res) => {
 
     const user=await User.findOne({ email: email });
     if(!user){
-        res.status(401).json({ message:"Invalid credentials"});
+        return res.status(401).json({ message:"Invalid credentials"});
     }
 
-    const isMatch=bcrypt.compare(password,User.passwordHash);
+    const isMatch=await bcrypt.compare(password,user.passwordHash);
     if(!isMatch){
-        res.status(401).json({ message:"Invalid credentials" });
+        return res.status(401).json({ message:"Invalid credentials" });
     }
 
     const token=jwt.sign(

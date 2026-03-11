@@ -7,12 +7,15 @@ const cors=require("cors");
 const runRoute=require("./routes/run");
 const Room=require("./models/Room");
 const authRoutes=require("./routes/auth");
+const authMiddleware = require("./middleware/authMiddleware");
+const jwt=require("jsonwebtoken");
 
 const app=express();
 app.use(cors());
 app.use(express.json());
-app.use("/api/run",runRoute);
 app.use("/api/auth",authRoutes);
+app.use(authMiddleware);
+app.use("/api/run",runRoute);
 
 const server=http.createServer(app);
 
@@ -20,6 +23,25 @@ const io=new Server(server, {
     cors: {
         origin: "*",
     },
+});
+
+app.set("io", io);
+
+io.use((socket,next)=>{
+    const token=socket.handshake.auth.token;
+
+    if(!token){
+        return next(new Error("Unauthorized"));
+    }
+
+    try{
+        const decoded=jwt.verify(token,process.env.JWT_SECRET);
+        socket.user=decoded;
+        next();
+    }
+    catch(err){
+        next(new Error("Unauthorized"));
+    }
 });
 
 io.on("connection", (socket) => { //key
@@ -46,12 +68,14 @@ io.on("connection", (socket) => { //key
             },
             { new: true, upsert: true }
         );
-        if(room.currentCode){
-            socket.emit("code-update", room.currentCode);
-        }
+        console.log("Room found:", room.roomId);
+        console.log("Current code:", room.currentCode);
+        socket.emit("code-update", room.currentCode);
     });
 
     socket.on("code-change", async ({ roomId,code }) => {
+        console.log("Code change received from:", socket.id);
+        console.log("Room:", roomId);
         await Room.findOneAndUpdate(
             {roomId},
             {currentCode: code, lastActive: new Date() }

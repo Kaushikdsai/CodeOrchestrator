@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import Navbar from "../components/Navbar";
 
 function Home(){
 
@@ -20,6 +21,7 @@ function Home(){
 
     return (
         <div>
+            <Navbar />
             <h1>CODE ORCHESTARTOR</h1>
             <h2>Collaborate. Compile. Execute.</h2>
             <div>
