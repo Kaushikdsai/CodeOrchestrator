@@ -14,6 +14,7 @@ function Room(){
     const [code,setCode]=useState("");
     const [output,setOutput]=useState("");
     const [participants,setParticipants]=useState([]);
+    const [language,setLanguage]=useState("");
 
     const token=sessionStorage.getItem("token");
 
@@ -69,14 +70,22 @@ function Room(){
         socket.emit("code-change", {
             roomId,
             code: code
-        })
-    }
+        });
+    };
+
+    const handleReset = () => {
+        setCode("");
+        socket.emit("code-change",{
+            roomId,
+            code:""
+        });
+    };
 
     const runCode=async () => {
         try{
             await axios.post(
                 "http://localhost:5000/api/run",
-                { code, roomId },
+                { code,roomId,language },
                 {
                     headers:{
                         Authorization: `Bearer ${token}`
@@ -92,15 +101,33 @@ function Room(){
     return (
         <div>
             <Navbar />
-            <h2 className="room-title">ROOM: {roomId}</h2>
-            <CodeEditor code={code} setCode={handleCodeChange} />
-            <button className="run-btn" onClick={runCode}>Run Code</button>
-            <OutputPanel output={output} />
-            <div className="participants">
-                <h3>Active participants</h3>
-                {participants.map((p) => (
-                    <div key={p.socketId}>{p.name}</div>
-                ))}
+            <div className="room-container">
+                <div className="meet-info">
+                    <h2 className="room-title">ROOM: <span>{roomId}</span></h2>
+                    <div className="participants">
+                        <h3>Active participants</h3>
+                        {participants.map((p,index) => (
+                            <div key={p.socketId} className="participants-list">{index+1}. {p.name}</div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <div className="execution">
+                        <label className="lang-label" htmlFor="language">Choose a language: </label>
+                        <select id="language" name="language" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                            <option value="java">Java</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="python">Python</option>
+                            <option value="cpp">C++</option>
+                        </select>
+                        <button className="run-btn" onClick={runCode}>Run ▶</button>
+                        <button className="clr-btn" onClick={handleReset}>Reset ↺</button>
+                    </div>
+                    <CodeEditor language={language} className="code-editor" code={code} setCode={handleCodeChange}/>
+                    <div className="output">
+                        <OutputPanel output={output} />
+                    </div>
+                </div>
             </div>
         </div>
     )

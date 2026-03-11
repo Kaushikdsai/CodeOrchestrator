@@ -1,15 +1,17 @@
 import Editor from '@monaco-editor/react';
 
-function CodeEditor({ code,setCode }){
+function CodeEditor({ code,setCode,className,language }){
     return (
-        <Editor
-            height="40vh"
-            width="90vh"
-            language="java"
-            theme="vs-dark"
-            value={code}
-            onChange={(value) => setCode(value)}
-        />
+        <div className={className}>
+            <Editor
+                height="65vh"
+                width="170vh"
+                language={language}
+                theme="vs-dark"
+                value={code}
+                onChange={(value) => setCode(value)}
+            />
+        </div>
     );
 }
 

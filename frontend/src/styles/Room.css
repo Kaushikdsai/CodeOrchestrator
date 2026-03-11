@@ -1,0 +1,57 @@
+.room-container{
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.meet-info{
+    min-width: 250px;
+    background: #0f2a33;
+    border-right: 1px solid rgb(142, 142, 142);
+    padding: 20px;
+    h2{
+        color: #3f9ac5;
+    }
+    span{
+        color: rgb(212, 212, 212);
+    }
+}
+
+.participants{
+    border-top: 1px solid rgb(142, 142, 142);
+    border-bottom: 1px solid rgb(142, 142, 142);
+    width: 100%;
+    h3{
+        color: #3f9ac5;  
+    }
+    .participants-list{
+        color: rgb(255, 255, 255);
+        padding-bottom: 20px;
+    }
+}
+
+.code-editor{
+    border-bottom: 1px solid rgb(142, 142, 142);
+}
+
+.output{
+    .run-btn{
+        margin: 5px 5px auto;
+        background-color: #3f9ac5;
+        color: white;
+        border: none;
+        padding: 8px;
+    }
+}
+
+.execution{
+    display: flex;
+    background-color: #0f2a33;
+    color: white;
+    padding: 10px;
+    align-items: center;
+    gap: 12px;
+}
+
+.execution select{
+    margin-right:auto;
+}

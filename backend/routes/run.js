@@ -5,9 +5,9 @@ const authMiddleware=require("../middleware/authMiddleware");
 
 router.post("/",authMiddleware,async(req,res) => {
     try{
-        const { code,roomId }=req.body;
+        const { code,roomId,language }=req.body;
         const io=req.app.get("io");
-        const result=await executeCode(code);
+        const result=await executeCode(code,language);
         io.to(roomId).emit("code-output",result);
         res.json(result);
     }
