@@ -5,6 +5,7 @@ import CodeEditor from "../components/Editor";
 import OutputPanel from "../components/OutputPanel";
 import { socket } from "../services/socket";
 import Navbar from "../components/Navbar";
+import "../styles/Room.css";
 
 function Room(){
     const { roomId }=useParams();
@@ -78,9 +79,9 @@ function Room(){
     return (
         <div>
             <Navbar />
-            <h2>ROOM: {roomId}</h2>
+            <h2 className="room-title">ROOM: {roomId}</h2>
             <CodeEditor code={code} setCode={handleCodeChange} />
-            <button onClick={runCode}>Run Code</button>
+            <button className="run-btn" onClick={runCode}>Run Code</button>
             <OutputPanel output={output} />
         </div>
     )

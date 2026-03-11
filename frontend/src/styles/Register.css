@@ -23,6 +23,10 @@ form{
     width: 92px;
 }
 
+.register-btn:hover{
+    cursor: pointer;
+}
+
 .register-ip{
     width: 240px;
     margin-bottom: 12px;

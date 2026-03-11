@@ -1,0 +1,136 @@
+.home-container1{
+    padding-top: 10px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 737px;
+    text-align: center;
+}
+
+.home-container1 h1{
+    color: #3f9ac5;
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.home-container1 h2{
+    margin-top: 0;
+    color: white;
+    font-size: 28px;
+}
+
+.home-newroom{
+    background-color: #3f9ac5;
+    border: none;
+    color: white;
+    padding: 8px;
+    margin: 14px 0;
+    width: 110px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.join-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+}
+
+.home-join{
+    background-color: #3f9ac5;
+    border: none;
+    color: white;
+    padding: 8px;
+    width: 92px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.home-ip{
+    width: 240px;
+    height: 28px;
+    border: none;
+    padding-left: 8px;
+}
+
+.home-newroom:hover,
+.home-join:hover{
+    background-color: #2f7fa4;
+}
+
+.cc-features{
+    color: rgb(167, 128, 0);
+    text-align: center;
+}
+
+.features{
+    width: 700px;
+    margin: auto;
+    border: 1px solid rgba(63,154,197,0.4);
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+.carousel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:40px;
+    gap:40px;
+}
+
+.feature-card{
+    width:380px;
+    padding:40px;
+    background:#0f2b38;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.feature-card h3{
+    color:#3f9ac5;
+    margin-bottom:12px;
+}
+
+.feature-card p{
+    color:#cbd5e1;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.arrow{
+    border:none;
+    background:transparent;
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+}
+
+.arrow:hover{
+    color:#3f9ac5;
+}
+
+.dots{
+    text-align:center;
+    margin-top:15px;
+    margin-bottom: 15px;
+}
+
+.dot{
+    height:8px;
+    width:8px;
+    background:#888;
+    border-radius:50%;
+    display:inline-block;
+    margin:0 4px;
+}
+
+.dot.active{
+    background:#3f9ac5;
+}

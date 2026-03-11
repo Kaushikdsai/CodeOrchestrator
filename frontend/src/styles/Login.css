@@ -23,6 +23,10 @@ form{
     width: 92px;
 }
 
+.login-btn:hover{
+    cursor: pointer;
+}
+
 .login-ip{
     width: 240px;
     margin-bottom: 12px;
