@@ -2,7 +2,8 @@ const mongoose=require("mongoose");
 
 const participantSchema = new mongoose.Schema(
 {
-    user: {
+    socketId: String,
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },

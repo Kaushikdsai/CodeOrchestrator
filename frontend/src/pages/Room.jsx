@@ -8,10 +8,12 @@ import Navbar from "../components/Navbar";
 import "../styles/Room.css";
 
 function Room(){
+    
     const { roomId }=useParams();
 
     const [code,setCode]=useState("");
     const [output,setOutput]=useState("");
+    const [participants,setParticipants]=useState([]);
 
     const token=sessionStorage.getItem("token");
 
@@ -22,9 +24,15 @@ function Room(){
             socket.connect();
         }
 
-        const joinRoom = () => {
+        const joinRoom = async () => {
             console.log("Joining room:", roomId);
-            socket.emit("join-room", { roomId });
+            const res=await axios.get(`http://localhost:5000/api/auth/profile`,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const name=res.data;
+            socket.emit("join-room", { roomId,name });
         };
         if(socket.connected){
             joinRoom();
@@ -38,6 +46,10 @@ function Room(){
             setCode(newCode);
         });
 
+        socket.on("participants-update", (participants) => {
+            setParticipants(participants);
+        });
+
         socket.on("code-output", (data) => {
             setOutput(data.output || data.compileError || data.runtimeError);
         });
@@ -46,6 +58,7 @@ function Room(){
             socket.off("connect");
             socket.off("code-update");
             socket.off("code-output");
+            socket.off("participants-update");
         };
 
     }, [roomId]);
@@ -83,6 +96,12 @@ function Room(){
             <CodeEditor code={code} setCode={handleCodeChange} />
             <button className="run-btn" onClick={runCode}>Run Code</button>
             <OutputPanel output={output} />
+            <div className="participants">
+                <h3>Active participants</h3>
+                {participants.map((p) => (
+                    <div key={p.socketId}>{p.name}</div>
+                ))}
+            </div>
         </div>
     )
 }

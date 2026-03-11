@@ -46,31 +46,41 @@ io.use((socket,next)=>{
 
 io.on("connection", (socket) => { //key
     console.log("User connected: ",socket.id);
-
     socket.on("join-room", async ({ roomId,name }) => {
         socket.join(roomId);
         console.log(`User ${socket.id} joined room ${roomId}`);
 
-        const room=await Room.findOneAndUpdate(
+        await Room.findOneAndUpdate(
             { roomId },
             {
                 $setOnInsert: {
                     roomId,
                     currentCode: ""
                 },
+                $pull: {
+                    participants: { userId: socket.user.userId }
+                }
+            },
+            { upsert: true }
+        );
+
+        const room=await Room.findOneAndUpdate(
+            { roomId },
+            {
                 $addToSet: {
                     participants: {
+                        socketId: socket.id,
+                        userId: socket.user.userId,
                         name: name,
                         role: "editor",
                         joinedAt: new Date()
                     }
                 }
             },
-            { new: true, upsert: true }
+            { new: true }
         );
-        console.log("Room found:", room.roomId);
-        console.log("Current code:", room.currentCode);
         socket.emit("code-update", room.currentCode);
+        io.to(roomId).emit("participants-update",room.participants);
     });
 
     socket.on("code-change", async ({ roomId,code }) => {
@@ -83,8 +93,18 @@ io.on("connection", (socket) => { //key
         socket.to(roomId).emit("code-update",code);
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
         console.log("User disconnected: ",socket.id);
+        const room=await Room.findOneAndUpdate(
+            { "participants.socketId": socket.id },
+            {
+                $pull: { participants: { socketId: socket.id } }
+            },
+            { new: true }
+        );
+        if(room){
+            io.to(room.roomId).emit("participants-update", room.participants);
+        }
     });
 });
 

@@ -55,7 +55,7 @@ function Home(){
                 </div>
             </div>
             <div className="features">
-                <h2 className="cc-features">Why CodeCollab?</h2>
+                <h2 className="cc-features">Why Code Orechestrator?</h2>
                 <div className="carousel">
                     <button className="arrow left" onClick={prevFeature}>❮</button>
                     <div className="feature-card">

@@ -4,7 +4,7 @@ function Navbar(){
     const token=sessionStorage.getItem("token");
     return (
         <nav>
-            <p>CodeCollab</p>
+            <p>CODE ORCHESTARTOR</p>
             {token && (
                 <a href="/login" onClick={() => sessionStorage.removeItem("token")}>Logout</a>
             )}

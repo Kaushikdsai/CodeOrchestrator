@@ -18,6 +18,7 @@ function Login(){
             });
             const data=res.data;
             sessionStorage.setItem("token",data.token);
+            console.log(data.token);
             navigate("/home");
         }
         catch(err){
